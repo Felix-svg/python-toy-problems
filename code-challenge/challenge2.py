@@ -1,3 +1,13 @@
+"""
+Write a function:
+
+
+function solution(A);
+
+
+that, given an array A consisting of N integers, returns the maximum sum of two numbers whose digits add up to an equal sum. If there are no two numbers whose digits have an equal sum, the function should return -1.
+"""
+
 def sum_of_numbers(number):
     return sum(int(digit) for digit in str(number))
 
