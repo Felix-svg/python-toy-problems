@@ -6,19 +6,44 @@ function solution(A);
 that, given an array A of N integers, returns the minimum number of moves needed to end up with exactly 10 bricks in every box. If this is not possible, the function should return −1.
 """
 
+
 def solution(A):
-    total_bricks = sum(A)
-    target_sum = 10 * len(A)
-    excess = total_bricks - target_sum
-    if excess < 0:
-        return -1
+    N = len(A)
+    target = 10
     moves = 0
-    for bricks in A:
-        if bricks < 10:
-            moves += 10 - bricks
+    total_bricks = sum(A)
+
+    if total_bricks % N != 0 or total_bricks > 10 * N:
+        return -1
+
+    for i in range(N):
+        if A[i] < target:
+            diff = target - A[i]
+            if i + 1 < N and A[i + 1] >= diff:
+                A[i] += diff
+                A[i + 1] -= diff
+                moves += diff
+            elif i + 1 >= N and A[i - 1] >= diff:
+                A[i] += diff
+                A[i - 1] -= diff
+                moves += diff
+            else:
+                return -1
+        elif A[i] > target:
+            diff = A[i] - target
+            if i + 1 < N and A[i + 1] <= target:
+                A[i] -= diff
+                A[i + 1] += diff
+                moves += diff
+            elif i + 1 >= N and A[i - 1] <= target:
+                A[i] -= diff
+                A[i - 1] += diff
+                moves += diff
+            else:
+                return -1
+
     return moves
 
-A = [7, 15, 10, 8]
+
+A = [11, 10, 8, 12, 8, 10, 11]
 print(solution(A))
-
-
